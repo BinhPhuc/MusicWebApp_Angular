@@ -1,0 +1,66 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RegisterDTO } from '../../dtos/register.dto';
+import { UserService } from '../../services/user.service';
+import { error } from 'console';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
+})
+export class RegisterComponent {
+  public registerForm: FormGroup;
+  public submitted = false;
+
+  constructor(private fb: FormBuilder, private userService: UserService) {
+    this.registerForm = this.fb.group(
+      {
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        retypePassword: ['', Validators.required],
+      },
+      { validator: this.matchPasswords }
+    );
+  }
+
+  get f() {
+    return this.registerForm.controls;
+  }
+
+  matchPasswords(group: FormGroup) {
+    const password = group.get('password')?.value;
+    const retypePassword = group.get('retypePassword')?.value;
+    return password === retypePassword ? null : { mismatch: true };
+  }
+
+  ngOnInit() {}
+
+  onRegister() {
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+    }
+    const registerDTO: RegisterDTO = {
+      email: this.registerForm.get('email')?.value,
+      username: this.registerForm.get('username')?.value,
+      password: this.registerForm.get('password')?.value,
+      retype_password: this.registerForm.get('retypePassword')?.value,
+    };
+    console.log(registerDTO)
+    this.userService.register(registerDTO).subscribe({
+      next: () => {
+        debugger
+        console.log("register succesfully");
+      },
+      complete: () => {
+        debugger
+      },
+      error: (error: any) => {
+        debugger
+        alert(error.error.errorMessage)
+      }
+    })
+  }
+}
