@@ -13,8 +13,14 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   public registerForm: FormGroup;
   public submitted = false;
+  public showPassword = false;
+  public showRetypePassword = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {
     this.registerForm = this.fb.group(
       {
         username: ['', [Validators.required, Validators.minLength(3)]],
@@ -38,6 +44,14 @@ export class RegisterComponent {
 
   ngOnInit() {}
 
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleRetypePassword() {
+    this.showRetypePassword = !this.showRetypePassword;
+  }
+
   onRegister() {
     this.submitted = true;
     if (this.registerForm.invalid) {
@@ -49,21 +63,21 @@ export class RegisterComponent {
       password: this.registerForm.get('password')?.value,
       retype_password: this.registerForm.get('retypePassword')?.value,
     };
-    console.log(registerDTO)
+    console.log(registerDTO);
     this.userService.register(registerDTO).subscribe({
       next: () => {
-        debugger
-        console.log("register succesfully");
-        alert("Register succesfully, check email for more information");
+        debugger;
+        console.log('register succesfully');
+        alert('Register succesfully, check email for more information');
         this.router.navigate(['/login']);
       },
       complete: () => {
-        debugger
+        debugger;
       },
       error: (error: any) => {
-        debugger
-        alert(error.error.errorMessage)
-      }
-    })
+        debugger;
+        alert(error.error.errorMessage);
+      },
+    });
   }
 }

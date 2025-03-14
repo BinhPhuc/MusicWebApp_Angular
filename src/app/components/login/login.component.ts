@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public submitted = false;
+  public showPassword = false;
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -20,6 +21,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+    
   }
 
   onSubmit() {
