@@ -1,111 +1,150 @@
 <app-home-header></app-home-header>
 <div class="container-fluid home-container">
-  <div class="row">
-    <!-- Danh sách bài hát (Bên trái) -->
-    <div class="col-md-8 song-list">
-      <h2 class="section-title">🎵 Danh sách bài hát</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Artist</th>
-            <th>Genre</th>
-            <th>Album</th>
-            <th>Length</th>
-            <th>Features</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="let song of songs; let i = index"
-            (mouseenter)="hoveredIndex = i"
-            (mouseleave)="hoveredIndex = -1"
-			(dblclick)="playSong(song.file_name, song.id)"
-          >
-            <td class="play-cell">
-              <button
-                *ngIf="hoveredIndex === i && !chkPlaying(song.id)"
-                class="play-btn"
-                (click)="playSong(song.file_name, song.id)"
-              >
-                <i class="fa-solid fa-play"></i>
-              </button>
-			  <button
-                *ngIf="hoveredIndex === i && chkPlaying(song.id)"
-                class="play-btn"
-                (click)="pauseSong(song.id)"
-              >
-                <i class="fa-solid fa-pause"></i>
-              </button>
-              <span *ngIf="hoveredIndex !== i">{{ i + 1 }}</span>
-            </td>
-            <td>{{ song.title }}</td>
-            <td>{{ song.artist }}</td>
-            <td>{{ song.genre }}</td>
-            <td>{{ song.album }}</td>
-            <td>{{ song.duration }}</td>
-            <td>
-              <div class="action-group d-flex align-items-center">
-                <button class="fav-btn" (click)="toggleFavorite(song)">
-                  <i
-                    class="fa-solid fa-heart"
-                    [class.favorited]="song.is_favorite"
-                  ></i>
-                </button>
-                <div class="dropdown">
-                  <button
-                    class="action-btn dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                  >
-                    <i class="fa-solid fa-list-ul"></i>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li *ngFor="let playlist of playlists">
-                      <a
-                        class="dropdown-item"
-                        (click)="selectPlaylist(playlist)"
-                        >{{ playlist.name }}</a
-                      >
-                    </li>
-                    <a class="dropdown-item"
-                      ><i class="fa-solid fa-plus"></i>
-                      <span style="margin-left: 5px">New playlist</span></a
+    <div class="row">
+        <!-- Danh sách bài hát (Bên trái) -->
+        <div class="col-md-8 song-list">
+            <h2 class="section-title">🎵 Danh sách bài hát</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Genre</th>
+                        <th>Album</th>
+                        <th>Length</th>
+                        <th>Features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let song of songs; let i = index"
+                        (mouseenter)="hoveredIndex = i"
+                        (mouseleave)="hoveredIndex = -1"
+                        (dblclick)="playSong(song)"
                     >
-                  </ul>
-                </div>
-                <button class="action-btn" (click)="addToQueue(song)">
-                  <i class="fa-solid fa-clock"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Trình phát nhạc (Bên phải) -->
-    <div class="col-md-4 player">
-      <h2 class="section-title">🎶 Đang phát</h2>
-      <div *ngIf="currentSong" class="player-box">
-        <img [src]="currentSong.image" class="album-art" alt="Album Cover" />
-        <h4>{{ currentSong.title }}</h4>
-        <p>{{ currentSong.artist }}</p>
-		<audio #audioPlayer controls></audio>
-        <div class="controls">
-          <button class="btn btn-light" (click)="prevSong()">⏮ Trước</button>
-          <button class="btn btn-primary" (click)="togglePlay()">
-            {{ isPlaying ? "⏸ Tạm dừng" : "▶ Phát" }}
-          </button>
-          <button class="btn btn-light" (click)="nextSong()">⏭ Tiếp</button>
+                        <td class="play-cell">
+                            <button
+                                *ngIf="
+                                    hoveredIndex === i && !chkPlaying(song.id)
+                                "
+                                class="play-btn"
+                                (click)="playSong(song)"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button
+                                *ngIf="
+                                    hoveredIndex === i && chkPlaying(song.id)
+                                "
+                                class="play-btn"
+                                (click)="pauseSong(song.id)"
+                            >
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <span *ngIf="hoveredIndex !== i">{{ i + 1 }}</span>
+                        </td>
+                        <td>{{ song.title }}</td>
+                        <td>{{ song.artist }}</td>
+                        <td>{{ song.genre }}</td>
+                        <td>{{ song.album }}</td>
+                        <td>{{ song.duration }}</td>
+                        <td>
+                            <div class="action-group d-flex align-items-center">
+                                <button
+                                    class="fav-btn"
+                                    (click)="toggleFavorite(song)"
+                                >
+                                    <i
+                                        class="fa-solid fa-heart"
+                                        [class.favorited]="song.is_favorite"
+                                    ></i>
+                                </button>
+                                <div class="dropdown">
+                                    <button
+                                        class="action-btn dropdown-toggle"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                    >
+                                        <i class="fa-solid fa-list-ul"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li *ngFor="let playlist of playlists">
+                                            <a
+                                                class="dropdown-item"
+                                                (click)="
+                                                    selectPlaylist(playlist)
+                                                "
+                                                >{{ playlist.name }}</a
+                                            >
+                                        </li>
+                                        <a class="dropdown-item"
+                                            ><i class="fa-solid fa-plus"></i>
+                                            <span style="margin-left: 5px"
+                                                >New playlist</span
+                                            ></a
+                                        >
+                                    </ul>
+                                </div>
+                                <button
+                                    class="action-btn"
+                                    (click)="addToQueue(song)"
+                                >
+                                    <i class="fa-solid fa-clock"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <p>
-          Bài tiếp theo: <b>{{ isPlaying || "Hết danh sách" }}</b>
-        </p>
-      </div>
+        <div class="col-md-4 player">
+            <h2 class="section-title">🎶 Đang phát</h2>
+            <div *ngIf="currentSong" class="player-box">
+                <div class="album-placeholder">
+                    <i class="fa-solid fa-compact-disc"></i>
+                </div>
+                <h3>{{ currentSong.title }}</h3>
+                <p>{{ currentSong.artist }}</p>
+
+                <audio
+                    #audioPlayer
+                    controls
+                    controlsList="nodownload noplaybackrate"
+                ></audio>
+
+                <div class="controls">
+                    <button class="control-btn" (click)="toggleShuffle()">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+                    <button class="control-btn" (click)="prevSong()">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+
+                    <button
+                        class="control-btn play-pause-btn"
+                        (click)="togglePlay()"
+                    >
+                        <i
+                            class="fa-solid"
+                            [class.fa-play]="!isPlaying"
+                            [class.fa-pause]="isPlaying"
+                        ></i>
+                    </button>
+
+                    <button class="control-btn" (click)="nextSong()">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button class="control-btn" (click)="toggleRepeat()">
+                        <i class="fa-solid fa-repeat"></i>
+                    </button>
+                </div>
+                <p>
+                    Next in queue: <b>{{ isPlaying || "Hết danh sách" }}</b>
+                </p>
+            </div>
+        </div>
     </div>
-  </div>
+    <app-home-footer></app-home-footer>
 </div>
-<app-home-footer></app-home-footer>
