@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegisterDTO } from '../../dtos/register.dto';
 import { UserService } from '../../services/user.service';
 import { error } from 'console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterComponent {
   public registerForm: FormGroup;
   public submitted = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
     this.registerForm = this.fb.group(
       {
         username: ['', [Validators.required, Validators.minLength(3)]],
@@ -53,6 +54,8 @@ export class RegisterComponent {
       next: () => {
         debugger
         console.log("register succesfully");
+        alert("Register succesfully, check email for more information");
+        this.router.navigate(['/login']);
       },
       complete: () => {
         debugger
