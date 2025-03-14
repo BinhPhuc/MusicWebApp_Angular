@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
     ];
     public hoveredIndex: number = -1;
     public songs: Song[] = [];
-    public isPlaying: boolean = false;
+    public isShuffle: boolean = false;
     public timesPlayed: number = 0;
     public prevSongId: number = -1;
     public currentPlay: Map<number, boolean> = new Map();
@@ -49,10 +49,6 @@ export class HomeComponent implements OnInit {
         this.currentSong = this.songs[0];
     }
 
-    togglePlay() {
-        this.isPlaying = !this.isPlaying;
-    }
-
     nextSong() {
         const index = this.songs.indexOf(this.currentSong);
         if (index < this.songs.length - 1) {
@@ -83,7 +79,6 @@ export class HomeComponent implements OnInit {
     }
     playSong(song: Song) {
         debugger;
-        this.isPlaying = !this.isPlaying;
         this.currentPlay.set(song.id, true);
         this.timesPlayed++;
         if (this.prevSongId == -1) {
@@ -107,7 +102,6 @@ export class HomeComponent implements OnInit {
     pauseSong(id: number) {
         debugger;
         this.timesPlayed++;
-        this.isPlaying = !this.isPlaying;
         this.currentPlay.set(id, false);
         const audio = document.querySelector("audio") as HTMLAudioElement;
         audio.pause();
@@ -116,9 +110,13 @@ export class HomeComponent implements OnInit {
         return this.currentPlay.get(id);
     }
     toggleShuffle() {
-        alert("Xáo trộn");
+        debugger
+        this.isShuffle = !this.isShuffle;
     }
     toggleRepeat() {
         alert("Lặp lại");
+    }
+    isPlaying(song: Song) {
+        return this.currentPlay.get(song.id) == true;
     }
 }

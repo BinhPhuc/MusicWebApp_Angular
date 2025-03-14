@@ -35,7 +35,7 @@ audio::-webkit-media-controls-enclosure {
 }
 
 .fav-btn .fa-heart.favorited {
-    color: red;
+    color: #1e3c72;
 }
 
 .dropdown-menu {
@@ -148,7 +148,6 @@ tr:hover td {
 }
 
 .player-box h3 {
-    // font-size: 20px;
     margin-top: 45px;
     font-weight: bold;
     color: #1e3c72;
@@ -209,11 +208,10 @@ audio {
     font-size: 20px;
     color: #bbb;
     cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:  color 0.5s ease, opacity 0.2s ease, transform 0.2s ease;
 }
 
 .control-btn:hover {
-    // color: #ffffff;
     opacity: 1.1;
     transform: scale(1.05);
 }
@@ -235,3 +233,6 @@ audio {
   color: #4a4a4a;
 }
   
+.control-btn .fa-shuffle.shuffle {
+    color: #1e3c72;
+}

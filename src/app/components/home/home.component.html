@@ -116,7 +116,10 @@
 
                 <div class="controls">
                     <button class="control-btn" (click)="toggleShuffle()">
-                        <i class="fa-solid fa-shuffle"></i>
+                        <i
+                            class="fa-solid fa-shuffle"
+                            [class.shuffle]="isShuffle"
+                        ></i>
                     </button>
                     <button class="control-btn" (click)="prevSong()">
                         <i class="fa-solid fa-backward-step"></i>
@@ -124,12 +127,16 @@
 
                     <button
                         class="control-btn play-pause-btn"
-                        (click)="togglePlay()"
+                        (click)="
+                            isPlaying(currentSong)
+                                ? pauseSong(currentSong.id)
+                                : playSong(currentSong)
+                        "
                     >
                         <i
                             class="fa-solid"
-                            [class.fa-play]="!isPlaying"
-                            [class.fa-pause]="isPlaying"
+                            [class.fa-play]="!isPlaying(currentSong)"
+                            [class.fa-pause]="isPlaying(currentSong)"
                         ></i>
                     </button>
 
