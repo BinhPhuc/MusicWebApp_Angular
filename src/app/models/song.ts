@@ -4,6 +4,7 @@ export interface Song {
 	artist: string;
 	album: string;
 	genre: string;
-	length: number;
+	duration: string;
 	file_name: string;
+	is_favorite: boolean;
 }

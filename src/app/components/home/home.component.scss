@@ -1,0 +1,110 @@
+.home-container {
+  padding: 20px;
+}
+
+.section-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.fav-btn:focus,
+.fav-btn:active {
+  background: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.fav-btn .fa-heart {
+  color: #bbb;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.fav-btn .fa-heart.favorited {
+  color: red;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.action-group {
+  gap: 10px;
+}
+
+.fav-btn,
+.action-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.action-btn:hover,
+.fav-btn:hover {
+  color: #1e3c72;
+}
+
+.player {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.player-box {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.album-art {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.controls button {
+  margin: 5px;
+}
+
+.play-cell {
+  width: 40px;
+  text-align: center;
+}
+.play-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1e3c72;
+  transition: color 0.3s ease;
+}
+
+.play-btn:hover {
+  color: #163b68;
+}
+
+tr:hover td {
+  background: #c7d4dd !important;
+  cursor: pointer;
+}

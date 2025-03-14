@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import { LoginDTO } from '../../dtos/login.dto';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,32 +13,51 @@ export class LoginComponent implements OnInit {
   public submitted = false;
   public showPassword = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['pham.phuc.binh.271106@gmail.com', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  get f() { return this.loginForm.controls; }
-
-  ngOnInit() {
-
+  get f() {
+    return this.loginForm.controls;
   }
+
+  ngOnInit() {}
 
   togglePassword() {
     this.showPassword = !this.showPassword;
-    
   }
 
   onSubmit() {
-    console.log(this.loginForm.get('email')?.value)
     this.submitted = true;
-    if (this.loginForm.valid) {
-      console.log('Đăng nhập thành công!', this.loginForm.value);
-      alert('Đăng nhập thành công!');
-    } else {
-      console.log('Form không hợp lệ!');
+    if (this.loginForm.invalid) {
+      return;
     }
+    const loginDTO: LoginDTO = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value,
+    };
+    this.userService.login(loginDTO).subscribe({
+      next: (data: any) => {
+        debugger
+        alert(`Welcome ${data.username}`);
+        this.router.navigate(['/home']);
+      },
+      complete: () => {
+        debugger
+        console.log('complete');
+      },
+      error: (error: any) => {
+        debugger
+        alert(error.error.errorMessage);
+        console.log(error);
+      },
+    })
   }
 }
